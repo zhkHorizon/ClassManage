@@ -675,6 +675,10 @@ fieldset[disabled] .btn {
     }
     .panel-timeDiv{
       margin-right: 10px;
+      margin-bottom: 10px;
+    }
+    .setCenter{
+      margin-top: 10px;
     }
     #result{
       padding-left: 20px;

@@ -1,18 +1,23 @@
 
 var countTime = new Vue({
-    el:'#timePicker',
+    el:'#setPro',
     data:{
       result:null,
       examTime:null,
       num:30,
       priority:1,
+      chooseClassID:null,
       options:[
         {value:1,label:'高'},
         {value:2,label:'较高'},
         {value:3,label:'中'},
         {value:4,label:'较低'},
         {value:5,label:'低'}
-      ]
+      ],
+      UnitData:[
+        {ID:1,name:'工学院'},
+        {ID:2,name:'社科部'}
+      ],
     },
     methods:{
       summit:function(){

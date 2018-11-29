@@ -76,19 +76,10 @@
 				<nav>
 					<ul class="nav">
 						<!-- 侧边栏，需要修改地址和雷鸣 -->
-						<li><a href="index.html" class=""><i class="lnr lnr-home"></i> <span>首页</span></a></li>
+						<li><a href="index.html"><i class="lnr lnr-home"></i> <span>首页</span></a></li>
 						<li><a href="#" class=""><i class="lnr lnr-code"></i> <span>预约空闲教室</span></a></li>
-						<li><a href="#" class=""><i class="lnr lnr-chart-bars"></i> <span>课程课室调整</span></a></li>
-						<li>
-								<a href="#subPages" data-toggle="collapse" class="active"><i class="lnr lnr-file-empty"></i> <span>考试课室安排</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
-								<div id="subPages" class="collapse in">
-									<ul class="nav">
-										<li><a href="#" class="">中期考试</a></li>
-										<li><a href="#" class="active">统一考试</a></li>
-									</ul>
-								</div>
-							</li>
-						<li><a href="#" class=""><i class="lnr lnr-alarm"></i> <span>补课课室安排</span></a></li>
+                        <li><a href="#" class="active"><i class="lnr lnr-cog"></i> <span>考试课室申请</span></a></li>
+						<li><a href="#" class=""><i class="lnr lnr-alarm"></i> <span>补课课室申请</span></a></li>
 					</ul>
 				</nav>
 			</div>
@@ -98,39 +89,62 @@
 		<div class="main">
 			<!-- MAIN CONTENT -->
 			<div class="main-content">
-				<div  id="setPro" class="container-fluid">
+				<div  id="timePicker" class="container-fluid">
 					<!-- 条件选择开始 -->
 					<div  class="panel panel-headline">
 						<div  class="panel-heading clearfix">
-						<h3 class="panel-title">设置优先级</h3>
-						<div id="result">
+					
 							
-							<div class="exam-result">
-								<el-table :data="UnitData" scripe >
-										<el-table-column align="center" prop="name" label="开课单位"></el-table-column>
-										<el-table-column align="center" label="优先级设定">
-												<template>
-													<p class="panel-text">优先级</p>
-													<el-select v-model="priority" placeholder="请选择">
-														<el-option
-														  v-for="item in options"
-														  :key="item.value"
-														  :label="item.label"
-														  :value="item.value">
-														</el-option>
-													  </el-select>
-													
-												</template> 
-
+                            <h3 class="panel-title">选择条件</h3>
+                            <div class="panel-timeDiv pull-left">
+								<p class="panel-text">课程</p>
+								<el-select v-model="chooseClassID" placeholder="请选择">
+									<el-option
+									  v-for="item in classData"
+									  :key="item.classID"
+									  :label="item.name"
+									  :value="item.classID">
+									</el-option>
+								  </el-select>
+							</div>
+                            <div class="panel-timeDiv">
+                                <p class="panel-text">考试人数</p>
+                            
+                                <el-input-number v-model="num" :min="1" :max="200" label="描述文字"></el-input-number>
+                            </div>
+							<div class="panel-timeDiv pull-left">
+								<p class="panel-text">考试时间</p>
+							
+								<el-date-picker  v-model="examTime" type="date"
+									placeholder="选择日期" ></el-date-picker>
+                            </div>
+                            <div class="panel-timeDiv" >
+                                <p class="panel-text">节数</p>
+                                <el-checkbox-group v-model="sec" >
+                                    <el-checkbox class="setCenter" align="center" v-for="item in secList"
+                                        :label="item" :key="item">{{item}}</el-checkbox>
+                                </el-checkbox-group>
+                            </div>
+						</div>
+						<div id="result">
+							<el-button type="primary" @click="summit()">查询</el-button>
+							<div v-if="result" class="exam-result">
+								<el-table :data="result" scripe >
+										<el-table-column align="center" prop="name" label="教室名"></el-table-column>
+										<el-table-column align="center" prop="allowExamPeo" label="考试人数"></el-table-column>
+										<el-table-column align="center" prop="Peo" label="容纳人数"></el-table-column>
+										<el-table-column align="center" label="提交申请">
+											<template slot-scope="scope">
+												<el-button type="primary" plain size="mini" @click="apply(result[scope.$index].classroomId)">提交</el-button>
+											</template>
+											<!-- <button type="button" class="btn btn-primary center-block" @click="apply()"  >申请</button> -->
 										</el-table-column>
-										
 								</el-table>
 							</div>
 
 						</div>
 					</div>
 					<!-- END 条件选择-->
-					<el-button type="primary" @click="summit()">设置</el-button>
 
 				</div>
 	<!-- END WRAPPER -->
@@ -147,7 +161,7 @@
 	<script src="assets/lib/vue.js"></script>
 	<!-- 引入组件库 -->
 	<script src="assets/lib/index.js"></script>
-	<script src="assets/scripts/examManage.js"></script>
+	<script src="assets/scripts/examth.js"></script>
 </body>
 
 </html>
